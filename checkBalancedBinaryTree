@@ -1,0 +1,56 @@
+import java.util.*;
+public class Solution {
+	
+	class TreeNode{
+		int value;
+		TreeNode left;
+		TreeNode right;
+		
+		TreeNode (int value) {
+			this.value = value;
+		}
+	}
+	// O(n2) solution
+	public int getHeight(TreeNode root) {
+		if (root == null) {
+			return 0;
+		}
+		return Math.max(getHeight(root.left),getHeight(root.right)) + 1;
+	}
+	public boolean checkBalancedTree(TreeNode root){
+		if (root == null) {
+			return true;
+		}
+		int diff = getHeight(root.left) - getHeight(root.right);
+		if (Math.abs(diff) > 1) {
+			return false;
+		} else {
+			return checkBalancedTree(root.left) && checkBalancedTree(root.right);
+		}
+	}
+	
+	// O(n) for time and 0(Height) for space solution 
+	public int checkHeight(TreeNode root) {
+		if (root == null) {
+			return 0;
+		}
+		int left = checkHeight(root.left);
+		int right = checkHeight(root.right);
+		if (left == -1 || right == -1) {
+			return -1;
+		}
+		
+		if (Math.abs(left - right) > 1) {
+			return -1;
+		} else {
+			return Math.max(left, right) + 1;
+		}
+	}
+	
+	public boolean checkABalancedTree(TreeNode root) {
+		if(checkHeight(root) == -1) {
+			return false;
+		} else {
+			return true;
+		}
+	}
